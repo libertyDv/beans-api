@@ -2,3 +2,17 @@
   width: 50px;
 }
 
+.recipeTags {
+  margin-top: 10px;
+}
+
+.tagItem {
+  display: inline;
+  margin-right: 5px;
+}
+
+.tagSeparator {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+

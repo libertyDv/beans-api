@@ -1,6 +1,7 @@
 import ListBeans from './ListBeans';
 import './App.css';
 import ListRecipes from './ListRecipes';
+import ListCombinations from './ListCombinations';
 
 function App() {
  
@@ -8,7 +9,7 @@ function App() {
 
   return (
    <>
-   <ListRecipes/>
+   <ListCombinations/>
    </>
   );
 }
