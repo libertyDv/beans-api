@@ -1,7 +1,5 @@
-import ListBeans from './ListBeans';
 import './App.css';
-import ListRecipes from './ListRecipes';
-import ListCombinations from './ListCombinations';
+import AppRouter from './AppRouter';
 
 function App() {
  
@@ -9,7 +7,9 @@ function App() {
 
   return (
    <>
-   <ListRecipes/>
+   <div className='appContainer'>
+   <AppRouter/>
+   </div>
    </>
   );
 }
