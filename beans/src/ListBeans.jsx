@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useTransition, startTransition } from 'react';
 import './App.css';
 
 function ListBeans() {
@@ -8,6 +8,25 @@ function ListBeans() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState(null);
+    const [filteredBeans, setFilteredBeans] = useState([]);
+
+    const handleChange = (event) => {
+        const value = event.target.value;
+
+        startTransition(() => {
+            if (value === "") {
+                setFilteredBeans(data)
+
+            } else {
+                const newFilteredBeans = data.filter(bean =>
+                    bean.flavorName.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredBeans(newFilteredBeans)
+
+            }
+
+        })
+    }
 
 
     useEffect(() => {
@@ -24,6 +43,7 @@ function ListBeans() {
                 if (result.items && result.totalPages !== undefined) {
                     setData(result.items);
                     setTotalPages(result.totalPages);
+                    setFilteredBeans(result.items);
                 } else {
                     throw new Error('Unexpected data structure');
                 }
@@ -60,8 +80,14 @@ function ListBeans() {
 
     return (
         <div className='App'>
+            <h1>Bean list</h1>
+            <input
+                type="text"
+                onChange={handleChange}
+                placeholder='filter beans'
+            />
             <ul className='card'>
-                {data.map(bean => (
+                {filteredBeans.map(bean => (
                     <li
                         key={bean.beanId}
                         className='beanItem'

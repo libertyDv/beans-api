@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, startTransition } from "react"
 import './App.css';
 
 
@@ -9,6 +9,24 @@ function ListCombinations() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState(null);
+    const [filteredCombo, setFilteredCombo] = useState([])
+
+    const handleChange = (event) => {
+        const value = event.target.value
+
+        startTransition(() => {
+            if (value === "") {
+                setFilteredCombo(data)
+            } else {
+                const newFilteredCombo = data.filter(combo =>
+                    combo.name.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredCombo(newFilteredCombo);
+            }
+        })
+    }
+
+
 
     useEffect(() => {
         async function fetchData() {
@@ -26,6 +44,7 @@ function ListCombinations() {
                 if (result && result.items && Array.isArray(result.items)) {
                     setData(result.items)
                     setTotalPages(result.totalPages);
+                    setFilteredCombo(result.items)
                 } else {
                     throw new Error("Unexpected data structure");
                 }
@@ -62,8 +81,14 @@ function ListCombinations() {
 
     return (
         <div className="App">
+            <h1>Combinations</h1>
+            <input 
+            type="text"
+            onChange={handleChange}
+            placeholder="filter combos"
+            />
             <ul className="card">
-                {data.map(combo => (
+                {filteredCombo.map(combo => (
                     <li
                         key={combo.combinationId}
                     >

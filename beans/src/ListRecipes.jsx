@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, startTransition } from "react";
 import './App.css';
 
 function ListRecipes() {
@@ -7,6 +7,23 @@ function ListRecipes() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState(null);
+    const [filteredRecipes, setFilteredRecipes] = useState([])
+
+    const handleChange = (event) => {
+        const value = event.target.value;
+
+        startTransition(() => {
+            if (value === "") {
+                setFilteredRecipes(data)
+            } else {
+                const newFilteredBeans = data.filter(recipe => 
+                    recipe.name.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredRecipes(newFilteredBeans);
+            }
+            
+        })
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -23,6 +40,7 @@ function ListRecipes() {
                 if (result && result.items && Array.isArray(result.items)) {
                     setData(result.items);
                     setTotalPages(result.totalPages); 
+                    setFilteredRecipes(result.items)
                 } else {
                     throw new Error("Unexpected data structure");
                 }
@@ -59,15 +77,21 @@ function ListRecipes() {
 
     return (
         <div className="App">
+            <h1>Recipe list</h1>
+            <input 
+            type="text"
+            onChange={handleChange}
+            placeholder="filter recipes"
+            />
             <ul className="card">
-                {data.map(bean => (
+                {filteredRecipes.map(recipe => (
                     <li
-                        key={bean.beanId}
+                        key={recipe.beanId}
                         className="beanItem"
                     >
-                        <img src={bean.imageUrl} className="beanImage" alt={bean.flavorName} />
-                        <div>{bean.flavorName}</div>
-                        <div>{bean.description}</div>
+                        <img src={recipe.imageUrl} className="beanImage" alt={recipe.flavorName} />
+                        <div>{recipe.name}</div>
+                        <div>{recipe.description}</div>
                     </li>
                 ))}
             </ul>
