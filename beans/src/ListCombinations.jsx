@@ -1,5 +1,5 @@
 import React, { useState, useEffect, startTransition, useCallback } from "react"
-import './App.css';
+import "./styles/ListCombos.css"
 
 
 function ListCombinations() {
@@ -81,18 +81,31 @@ function ListCombinations() {
 
     return (
         <div className="App">
-            <h1>Combinations</h1>
-            <input
-                type="text"
-                onChange={handleChange}
-                placeholder="filter combos"
-            />
-            <ul className="card">
+            <h1 className="titCombo">Combinations</h1>
+            <div className="container">
+                <input
+                    type="text"
+                    onChange={handleChange}
+                    className="searchCombo"
+                    placeholder="filter combos"
+                />
+            </div>
+            <div className='paginationControl'>
+                <button className="prev" onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Prev
+                </button>
+                <span className="current"> Page {currentPage} of {totalPages} </span>
+                <button className="next" onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
+            <ul className="cardCombo">
                 {filteredCombo.map(combo => (
                     <li
                         key={combo.combinationId}
+                        className="comboItem"
                     >
-                        <div>{combo.name}</div>
+                        <div className="comboName">{combo.name}</div>
                         <div className="recipeTags">
                             {combo.tag.map((tag, i) => (
                                 <span key={i} className="tagItem">

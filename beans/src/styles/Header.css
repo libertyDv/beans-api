@@ -1,0 +1,15 @@
+.header {
+    width: 100%;
+    background-color: rgb(126, 8, 8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.btnHeader {
+    background: none;
+    color: white;
+    margin: 0 10px;
+    font-size: 18px;
+}

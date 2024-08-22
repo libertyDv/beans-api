@@ -113,6 +113,16 @@ function ListBeans() {
                 ))}
             </ul>
 
+            <div className='paginationControl'>
+                <button className='prev' onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Prev
+                </button>
+                <span className='current'> Page {currentPage} of {totalPages} </span>
+                <button className='next' onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
+
            
         </div>
     );
