@@ -1,5 +1,5 @@
 import React, { useState, useEffect, startTransition, useCallback } from 'react';
-import './App.css';
+import './styles/ListBeans.css'
 
 function ListBeans() {
 
@@ -78,37 +78,42 @@ function ListBeans() {
         return <div>Error: {error.message}</div>;
     }
 
+    
+
     return (
         <div className='App'>
-            <h1>Bean list</h1>
+            <h1 className='titBeans'>Bean list</h1>
+            <div className='container'>
             <input
+            className='searchBeans'
                 type="text"
                 onChange={handleChange}
                 placeholder='filter beans'
             />
+            </div>
+            <div className='paginationControl'>
+                <button className='prev' onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Prev
+                </button>
+                <span className='current'> Page {currentPage} of {totalPages} </span>
+                <button className='next' onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
             <ul className='card'>
                 {filteredBeans.map(bean => (
                     <li
                         key={bean.beanId}
                         className='beanItem'
-                        style={{ backgroundColor: bean.backgroundColor }}
                     >
                         <img src={bean.imageUrl} alt={bean.flavorName} className='beanImage' />
-                        <div>{bean.flavorName}</div>
-                        <div>{bean.description || 'No description available'}</div>
+                        <div className='beanName'>{bean.flavorName}</div>
+                        <div className='beanDesc'>{bean.description || 'No description available'}</div>
                     </li>
                 ))}
             </ul>
 
-            <div className='paginationControl'>
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    Prev
-                </button>
-                <span> Page {currentPage} of {totalPages} </span>
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+           
         </div>
     );
 }

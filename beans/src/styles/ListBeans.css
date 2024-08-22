@@ -1,0 +1,74 @@
+.titBeans {
+    color: rgb(148, 10, 10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.searchBeans {
+    padding: 10px;
+    font-size: 16px;
+    width: 60%;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    text-align: center;
+    width: 25%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.beanItem {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid rgb(212, 133, 133);
+    border-radius: 15px;
+    padding: 20px;
+    font-weight: bold;
+    height: 150px;
+    background-color: rgba(177, 176, 174, 0.123);
+
+
+}
+.beanName {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.beanImage {
+    width: 80px;
+}
+
+.paginationControl {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.prev {
+    margin-right: 20px;
+}
+
+.next {
+    margin-left: 20px;
+}
+
+.current {
+    margin-top: 10px;
+}

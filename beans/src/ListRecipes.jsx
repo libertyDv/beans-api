@@ -77,8 +77,9 @@ function ListRecipes() {
 
     return (
         <div className="App">
-            <h1>Recipe list</h1>
-            <input 
+            <h1 className="titRecipe">Recipe list</h1>
+            <input
+            className="buscador" 
             type="text"
             onChange={handleChange}
             placeholder="filter recipes"
