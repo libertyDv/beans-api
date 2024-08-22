@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useTransition, startTransition } from 'react';
+import React, { useState, useEffect, startTransition, useCallback } from 'react';
 import './App.css';
 
 function ListBeans() {
@@ -10,23 +10,23 @@ function ListBeans() {
     const [error, setError] = useState(null);
     const [filteredBeans, setFilteredBeans] = useState([]);
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         const value = event.target.value;
 
         startTransition(() => {
             if (value === "") {
-                setFilteredBeans(data)
+                setFilteredBeans(data);
 
             } else {
                 const newFilteredBeans = data.filter(bean =>
                     bean.flavorName.toLowerCase().includes(value.toLowerCase())
                 );
-                setFilteredBeans(newFilteredBeans)
+                setFilteredBeans(newFilteredBeans);
 
             }
 
         })
-    }
+    }, [data]);
 
 
     useEffect(() => {
@@ -58,17 +58,17 @@ function ListBeans() {
         fetchData();
     }, [currentPage]); // se ejecuta cuando currentPage cambie
 
-    const handleNextPage = () => {
+    const handleNextPage = useCallback(() => {
         if (currentPage < totalPages) {
             setCurrentPage(prevPage => prevPage + 1);
         }
-    };
+    }, [currentPage, totalPages]);
 
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
-    };
+    }, [currentPage]);
 
     if (loading) {
         return <div>Loading...</div>;

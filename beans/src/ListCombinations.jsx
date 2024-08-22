@@ -1,4 +1,4 @@
-import React, { useState, useEffect, startTransition } from "react"
+import React, { useState, useEffect, startTransition, useCallback } from "react"
 import './App.css';
 
 
@@ -11,12 +11,12 @@ function ListCombinations() {
     const [error, setError] = useState(null);
     const [filteredCombo, setFilteredCombo] = useState([])
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         const value = event.target.value
 
         startTransition(() => {
             if (value === "") {
-                setFilteredCombo(data)
+                setFilteredCombo(data);
             } else {
                 const newFilteredCombo = data.filter(combo =>
                     combo.name.toLowerCase().includes(value.toLowerCase())
@@ -24,7 +24,7 @@ function ListCombinations() {
                 setFilteredCombo(newFilteredCombo);
             }
         })
-    }
+    }, [data]);
 
 
 
@@ -59,17 +59,17 @@ function ListCombinations() {
         fetchData();
     }, [currentPage]);
 
-    const handleNextPage = () => {
+    const handleNextPage = useCallback(() => {
         if (currentPage < totalPages) {
             setCurrentPage(prevPage => prevPage + 1);
         }
-    };
+    }, [currentPage, totalPages]);
 
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
-    };
+    }, [currentPage]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -82,10 +82,10 @@ function ListCombinations() {
     return (
         <div className="App">
             <h1>Combinations</h1>
-            <input 
-            type="text"
-            onChange={handleChange}
-            placeholder="filter combos"
+            <input
+                type="text"
+                onChange={handleChange}
+                placeholder="filter combos"
             />
             <ul className="card">
                 {filteredCombo.map(combo => (

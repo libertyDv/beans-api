@@ -1,4 +1,4 @@
-import React, { useState, useEffect, startTransition } from "react";
+import React, { useState, useEffect, startTransition, useCallback } from "react";
 import './App.css';
 
 function ListRecipes() {
@@ -9,12 +9,12 @@ function ListRecipes() {
     const [error, setError] = useState(null);
     const [filteredRecipes, setFilteredRecipes] = useState([])
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         const value = event.target.value;
 
         startTransition(() => {
             if (value === "") {
-                setFilteredRecipes(data)
+                setFilteredRecipes(data);
             } else {
                 const newFilteredBeans = data.filter(recipe => 
                     recipe.name.toLowerCase().includes(value.toLowerCase())
@@ -23,7 +23,7 @@ function ListRecipes() {
             }
             
         })
-    }
+    }, [data]);
 
     useEffect(() => {
         async function fetchData() {
@@ -55,17 +55,17 @@ function ListRecipes() {
         fetchData();
     }, [currentPage]);
 
-    const handleNextPage = () => {
+    const handleNextPage = useCallback(() => {
         if (currentPage < totalPages) {
             setCurrentPage(prevPage => prevPage + 1);
         }
-    };
+    }, [currentPage, totalPages]);
 
-    const handlePrevPage = () => {
+    const handlePrevPage = useCallback(() => {
         if (currentPage > 1) {
             setCurrentPage(prevPage => prevPage - 1);
         }
-    };
+    }, [currentPage]);
 
     if (loading) {
         return <div>Loading...</div>;
